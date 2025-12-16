@@ -1,0 +1,84 @@
+<aside class="w-64 bg-dashboardBlue text-white fixed h-full left-0 top-0 flex flex-col z-50 shadow-2xl font-sans overflow-hidden">
+    <div class="px-6 py-6 flex items-center gap-3">
+        <!-- Logo placeholder removed -->
+        <h1 class="font-bold text-xl tracking-wide uppercase">SCIS</h1>
+    </div>
+
+    <div class="px-4">
+        <hr class="border-white/20">
+    </div>
+
+    <nav class="flex-1 py-6 px-6">
+        <ul class="space-y-4">
+            <li>
+                <a href="dashboard.php"
+                    class="flex items-center gap-3 px-3 py-2 rounded-lg <?php echo ($current_page == 'dashboard.php') ? 'bg-white/10 font-bold text-white' : 'font-medium text-white/80 hover:bg-white/5 hover:text-white transition'; ?>">
+                    <i class="fa-solid fa-chart-line w-5"></i>
+                    Dashboard
+                </a>
+            </li>
+            <li>
+                <a href="registration_category.php"
+                    class="flex items-center gap-3 px-3 py-2 rounded-lg <?php echo ($current_page == 'registration_category.php' || $current_page == 'senior_citizen_list.php') ? 'bg-white/10 font-bold text-white' : 'font-medium text-white/80 hover:bg-white/5 hover:text-white transition'; ?>">
+                    <i class="fa-solid fa-users w-5"></i>
+                    Registration
+                </a>
+            </li>
+            <li>
+                <a href="complaints.php"
+                    class="flex items-center gap-3 px-3 py-2 rounded-lg <?php echo ($current_page == 'complaints.php') ? 'bg-white/10 font-bold text-white' : 'font-medium text-white/80 hover:bg-white/5 hover:text-white transition'; ?>">
+                    <i class="fa-solid fa-file-circle-exclamation w-5"></i>
+                    Complaints
+                </a>
+            </li>
+            <li>
+                <a href="id_printing.php"
+                    class="flex items-center gap-3 px-3 py-2 rounded-lg <?php echo ($current_page == 'id_printing.php' || $current_page == 'new_id.php') ? 'bg-white/10 font-bold text-white' : 'font-medium text-white/80 hover:bg-white/5 hover:text-white transition'; ?>">
+                    <i class="fa-solid fa-id-card w-5"></i>
+                    ID Printing
+                </a>
+            </li>
+            <li>
+                <a href="accounts.php"
+                    class="flex items-center gap-3 px-3 py-2 rounded-lg <?php echo ($current_page == 'accounts.php' || $current_page == 'new_id.php') ? 'bg-white/10 font-bold text-white' : 'font-medium text-white/80 hover:bg-white/5 hover:text-white transition'; ?>">
+                    <i class="fa-solid fa-user-gear w-5"></i>
+                    Accounts
+                </a>
+            </li>
+            <li>
+                <a href="archives.php"
+                    class="flex items-center gap-3 px-3 py-2 rounded-lg <?php echo ($current_page == 'archives.php' || $current_page == 'new_id.php') ? 'bg-white/10 font-bold text-white' : 'font-medium text-white/80 hover:bg-white/5 hover:text-white transition'; ?>">
+                    <i class="fa-solid fa-box-archive w-5"></i>
+                    Archives
+                </a>
+            </li>
+            <li>
+                <a href="heatmap.php"
+                    class="flex items-center gap-3 px-3 py-2 rounded-lg <?php echo ($current_page == 'heatmap.php' || $current_page == 'new_id.php') ? 'bg-white/10 font-bold text-white' : 'font-medium text-white/80 hover:bg-white/5 hover:text-white transition'; ?>">
+                    <i class="fa-solid fa-map-location-dot w-5"></i>
+                    Heat Map
+                </a>
+            </li>
+            <li>
+                <a href="announcement.php"
+                    class="flex items-center gap-3 px-3 py-2 rounded-lg <?php echo ($current_page == 'announcement.php') ? 'bg-white/10 font-bold text-white' : 'font-medium text-white/80 hover:bg-white/5 hover:text-white transition'; ?>">
+                    <i class="fa-solid fa-bullhorn w-5"></i>
+                    Announcements
+                </a>
+            </li>
+            <li>
+                <a href="db_test.php"
+                    class="flex items-center gap-3 px-3 py-2 rounded-lg <?php echo ($current_page == 'db_test.php') ? 'bg-white/10 font-bold text-white' : 'font-medium text-white/80 hover:bg-white/5 hover:text-white transition'; ?>">
+                    <i class="fa-solid fa-flask w-5"></i>
+                    API/DB Test
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="px-4">
+        <hr class="border-white/20">
+    </div>
+
+    <!-- Settings link removed -->
+</aside>
