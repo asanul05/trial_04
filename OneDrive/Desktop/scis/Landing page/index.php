@@ -1,4 +1,5 @@
 <?php include 'header.php'; ?>
+<h1 style="text-align: center; margin-top: 20px;">Hello World!</h1>
 <div id="loading-overlay" class="loading-overlay hidden">
     <div class="spinner"></div>
 </div>

@@ -45,19 +45,19 @@
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8" id="stepper-header">
             <div id="tab-1" class="step-active rounded-lg py-3 px-2 text-center flex flex-col items-center justify-center shadow-md relative step-indicator cursor-pointer" onclick="goToStep(1)">
                 <i class="fa-solid fa-user text-xl mb-1"></i>
-                <span class="font-semibold text-xs">Personal Details</span>
+                <span class="font-semibold text-xs">Personal Information</span>
             </div>
             <div id="tab-2" class="step-inactive rounded-lg py-3 px-2 text-center flex flex-col items-center justify-center shadow-md relative cursor-pointer" onclick="goToStep(2)">
-                <i class="fa-solid fa-address-card text-xl mb-1"></i>
-                <span class="font-semibold text-xs">Contact Information</span>
+                <i class="fa-solid fa-users text-xl mb-1"></i>
+                <span class="font-semibold text-xs">Family Composition</span>
             </div>
             <div id="tab-3" class="step-inactive rounded-lg py-3 px-2 text-center flex flex-col items-center justify-center shadow-md relative cursor-pointer" onclick="goToStep(3)">
-                <i class="fa-solid fa-graduation-cap text-xl mb-1"></i>
-                <span class="font-semibold text-xs">Socioeconomic</span>
+                <i class="fa-solid fa-sitemap text-xl mb-1"></i>
+                <span class="font-semibold text-xs">Association</span>
             </div>
             <div id="tab-4" class="step-inactive rounded-lg py-3 px-2 text-center flex flex-col items-center justify-center shadow-md relative cursor-pointer" onclick="goToStep(4)">
                 <i class="fa-solid fa-file-alt text-xl mb-1"></i>
-                <span class="font-semibold text-xs">Review & Submit</span>
+                <span class="font-semibold text-xs">Requirements</span>
             </div>
         </div>
 
@@ -67,18 +67,18 @@
 
             <!-- Step 1: Personal Details -->
             <section id="step-1" class="step-content bg-white border border-gray-300 rounded-lg shadow-sm p-6 mb-6">
-                <h3 class="font-bold brand-blue-text text-lg mb-4">Personal Details</h3>
+                <h3 class="font-bold brand-blue-text text-lg mb-4">Personal Na Impormasyon</h3>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-y-5 gap-x-6">
                     <div>
-                        <label for="first_name" class="block text-sm font-medium text-gray-700 mb-1">First Name</label>
+                        <label for="first_name" class="block text-sm font-medium text-gray-700 mb-1">First Name <span class="text-orange-500">*</span></label>
                         <input type="text" id="first_name" name="first_name" class="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-brandBlue focus:border-brandBlue text-sm" required>
                     </div>
                     <div>
-                        <label for="middle_name" class="block text-sm font-medium text-gray-700 mb-1">Middle Name</label>
+                        <label for="middle_name" class="block text-sm font-medium text-gray-700 mb-1">Middle Name/Middle Initial <span class="text-orange-500">*</span></label>
                         <input type="text" id="middle_name" name="middle_name" class="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-brandBlue focus:border-brandBlue text-sm">
                     </div>
-                    <div>
-                        <label for="last_name" class="block text-sm font-medium text-gray-700 mb-1">Last Name</label>
+                    <div class="md:col-span-2">
+                        <label for="last_name" class="block text-sm font-medium text-gray-700 mb-1">Last Name <span class="text-orange-500">*</span></label>
                         <input type="text" id="last_name" name="last_name" class="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-brandBlue focus:border-brandBlue text-sm" required>
                     </div>
                     <div>
@@ -86,22 +86,52 @@
                         <input type="text" id="extension" name="extension" class="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-brandBlue focus:border-brandBlue text-sm">
                     </div>
                     <div>
-                        <label for="birthdate" class="block text-sm font-medium text-gray-700 mb-1">Birthdate</label>
-                        <input type="date" id="birthdate" name="birthdate" class="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-brandBlue focus:border-brandBlue text-sm" required>
+                        <label for="house_number" class="block text-sm font-medium text-gray-700 mb-1">House No. <span class="text-orange-500">*</span></label>
+                        <input type="text" id="house_number" name="contact[house_number]" class="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-brandBlue focus:border-brandBlue text-sm">
+                    </div>
+                    <div class="md:col-span-2">
+                        <label for="street" class="block text-sm font-medium text-gray-700 mb-1">Street <span class="text-orange-500">*</span></label>
+                        <input type="text" id="street" name="contact[street]" class="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-brandBlue focus:border-brandBlue text-sm">
                     </div>
                     <div>
-                        <label for="gender_id" class="block text-sm font-medium text-gray-700 mb-1">Gender</label>
+                        <label for="barangay_id" class="block text-sm font-medium text-gray-700 mb-1">Barangay <span class="text-orange-500">*</span></label>
+                        <select id="barangay_id" name="barangay_id" class="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-brandBlue focus:border-brandBlue text-sm" required>
+                            <!-- Options populated by JS -->
+                        </select>
+                    </div>
+                    <div>
+                        <label for="city" class="block text-sm font-medium text-gray-700 mb-1">City, Province, Postal Code</label>
+                        <input type="text" id="city" name="contact[city]" value="Zamboanga City, Philippines, 7000" disabled class="w-full border border-gray-300 rounded-md p-3 bg-gray-100 text-black font-medium pr-10">
+                    </div>
+
+                    <div class="md:col-span-4">
+                            <label class="block text-sm font-semibold mb-2 text-black">Date of Birth <span class="text-orange-500">*</span></label>
+                            <div class="relative">
+                                <input type="date" placeholder="dd / mm / yy" class="w-full border border-gray-300 rounded-md p-3 text-gray-500">
+                                <div class="absolute inset-y-0 right-0 flex items-center px-3 text-black text-lg"></div>
+                            </div>
+                    </div>
+                    <div class="md:col-span-2">
+                        <label for="age" class="block text-sm font-medium text-gray-700 mb-1">Age <span class="text-orange-500">*</span></label>
+                        <input type="text" id="age" name="age" class="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-brandBlue focus:border-brandBlue text-sm" required>
+                    </div>
+
+                    <div>
+                        <label for="gender_id" class="block text-sm font-medium text-gray-700 mb-1">Sex/Gender <span class="text-orange-500">*</span></label>
                         <select id="gender_id" name="gender_id" class="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-brandBlue focus:border-brandBlue text-sm" required>
                             <!-- Options populated by JS -->
                         </select>
                     </div>
                 </div>
-            </section>
 
-            <!-- Step 2: Contact Information -->
-            <section id="step-2" class="step-content bg-white border border-gray-300 rounded-lg shadow-sm p-6 mb-6 hidden">
-                <h3 class="font-bold brand-blue-text text-lg mb-4">Contact Information</h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-y-5 gap-x-6">
+                <h3 class="font-bold brand-blue-text text-lg my-4 pt-4 border-t border-gray-100">Contact & Background Information</h3>
+                 <div class="grid grid-cols-1 md:grid-cols-2 gap-y-5 gap-x-6">
+                    <div>
+                        <label for="educational_attainment_id" class="block text-sm font-medium text-gray-700 mb-1">Educational Attainment</label>
+                        <select id="educational_attainment_id" name="educational_attainment_id" class="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-brandBlue focus:border-brandBlue text-sm">
+                            <!-- Options populated by JS -->
+                        </select>
+                    </div>
                     <div>
                         <label for="mobile_number" class="block text-sm font-medium text-gray-700 mb-1">Mobile Number</label>
                         <input type="text" id="mobile_number" name="contact[mobile_number]" class="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-brandBlue focus:border-brandBlue text-sm">
@@ -109,37 +139,6 @@
                     <div>
                         <label for="telephone_number" class="block text-sm font-medium text-gray-700 mb-1">Telephone Number</label>
                         <input type="text" id="telephone_number" name="contact[telephone_number]" class="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-brandBlue focus:border-brandBlue text-sm">
-                    </div>
-                    <div class="md:col-span-2">
-                        <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
-                        <input type="email" id="email" name="contact[email]" class="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-brandBlue focus:border-brandBlue text-sm">
-                    </div>
-                    <div>
-                        <label for="house_number" class="block text-sm font-medium text-gray-700 mb-1">House Number</label>
-                        <input type="text" id="house_number" name="contact[house_number]" class="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-brandBlue focus:border-brandBlue text-sm">
-                    </div>
-                    <div>
-                        <label for="street" class="block text-sm font-medium text-gray-700 mb-1">Street</label>
-                        <input type="text" id="street" name="contact[street]" class="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-brandBlue focus:border-brandBlue text-sm">
-                    </div>
-                    <div class="md:col-span-2">
-                        <label for="barangay_id" class="block text-sm font-medium text-gray-700 mb-1">Barangay</label>
-                        <select id="barangay_id" name="barangay_id" class="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-brandBlue focus:border-brandBlue text-sm" required>
-                            <!-- Options populated by JS -->
-                        </select>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Step 3: Socioeconomic Details -->
-            <section id="step-3" class="step-content bg-white border border-gray-300 rounded-lg shadow-sm p-6 mb-6 hidden">
-                <h3 class="font-bold brand-blue-text text-lg mb-4">Socioeconomic Details</h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-y-5 gap-x-6">
-                    <div>
-                        <label for="educational_attainment_id" class="block text-sm font-medium text-gray-700 mb-1">Educational Attainment</label>
-                        <select id="educational_attainment_id" name="educational_attainment_id" class="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-brandBlue focus:border-brandBlue text-sm">
-                            <!-- Options populated by JS -->
-                        </select>
                     </div>
                     <div>
                         <label for="monthly_salary" class="block text-sm font-medium text-gray-700 mb-1">Monthly Salary</label>
@@ -153,28 +152,161 @@
                         <label for="other_skills" class="block text-sm font-medium text-gray-700 mb-1">Other Skills</label>
                         <input type="text" id="other_skills" name="other_skills" class="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-brandBlue focus:border-brandBlue text-sm">
                     </div>
-                    <div>
-                        <label for="socioeconomic_status_id" class="block text-sm font-medium text-gray-700 mb-1">Socioeconomic Status</label>
-                        <select id="socioeconomic_status_id" name="socioeconomic_status_id" class="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-brandBlue focus:border-brandBlue text-sm">
-                            <!-- Options populated by JS -->
-                        </select>
+                </div>
+            </section>
+
+            <!-- Step 2: Family Composition -->
+            <section id="step-2" class="step-content bg-white border border-gray-300 rounded-lg shadow-sm p-6 mb-6 hidden">
+                <h3 class="font-bold brand-blue-text text-lg mb-4">Family Composition</h3>
+                <div class="mb-4">
+                    <p class="text-xs text-gray-600 mb-3">To Add a Family Member Please click Add Person Button</p>
+                    <div class="flex gap-3">
+                        <button type="button" onclick="addFamilyMember()" class="bg-green-500 hover:bg-green-600 text-white text-sm font-bold py-2 px-6 rounded shadow transition flex items-center gap-2">
+                            <i class="fa-solid fa-plus"></i> Add Person
+                        </button>
+                        <button type="button" onclick="deleteSelected()" class="bg-red-500 hover:bg-red-600 text-white text-sm font-bold py-2 px-6 rounded shadow transition flex items-center gap-2">
+                            <i class="fa-solid fa-trash-can"></i> Delete Selected
+                        </button>
                     </div>
+                </div>
+                <div id="family-container" class="space-y-6"></div>
+            </section>
+
+            <!-- Step 3: Association -->
+            <section id="step-3" class="step-content bg-white border border-gray-300 rounded-lg shadow-sm p-6 mb-6 hidden">
+                <h3 class="font-bold brand-blue-text text-lg mb-4">Target Sector (Pangunahing Sektor)</h3>
+                <div class="bg-blue-50 text-blue-900 p-4 rounded-lg mb-8 font-medium text-sm">
+                    Select ALL categories that apply to this senior citizen. Multiple selections are allowed.
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div>
-                        <label for="mobility_level_id" class="block text-sm font-medium text-gray-700 mb-1">Mobility Level</label>
-                        <select id="mobility_level_id" name="mobility_level_id" class="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-brandBlue focus:border-brandBlue text-sm">
-                            <!-- Options populated by JS -->
-                        </select>
+                        <h3 class="font-bold text-lg mb-4 text-black">Target Sectors</h3>
+                        <div class="space-y-4">
+                            <label class="border border-gray-300 rounded-xl p-4 flex items-start gap-4 cursor-pointer hover:border-blue-800 transition">
+                                <input type="checkbox" name="target_sector[]" value="PNGNA" class="checkbox-lg mt-1 accent-blue-900">
+                                <div><p class="font-bold text-sm text-black">PNGNA</p><p class="text-xs text-gray-500 mt-1">Member of national senior citizens organization</p></div>
+                            </label>
+                            <label class="border border-gray-300 rounded-xl p-4 flex items-start gap-4 cursor-pointer hover:border-blue-800 transition">
+                                <input type="checkbox" name="target_sector[]" value="WEPC" class="checkbox-lg mt-1 accent-blue-900">
+                                <div><p class="font-bold text-sm text-black">WEPC</p><p class="text-xs text-gray-500 mt-1">Female senior citizens in empowerment programs</p></div>
+                            </label>
+                            <label class="border border-gray-300 rounded-xl p-4 flex items-start gap-4 cursor-pointer hover:border-blue-800 transition">
+                                <input type="checkbox" name="target_sector[]" value="PWD" class="checkbox-lg mt-1 accent-blue-900">
+                                <div><p class="font-bold text-sm text-black">PWD</p><p class="text-xs text-gray-500 mt-1">Senior with recognized disability</p></div>
+                            </label>
+                            <label class="border border-gray-300 rounded-xl p-4 flex items-start gap-4 cursor-pointer hover:border-blue-800 transition">
+                                <input type="checkbox" name="target_sector[]" value="YNSP" class="checkbox-lg mt-1 accent-blue-900">
+                                <div><p class="font-bold text-sm text-black">YNSP</p><p class="text-xs text-gray-500 mt-1">Special care program</p></div>
+                            </label>
+                            <label class="border border-gray-300 rounded-xl p-4 flex items-start gap-4 cursor-pointer hover:border-blue-800 transition">
+                                <input type="checkbox" name="target_sector[]" value="PASP" class="checkbox-lg mt-1 accent-blue-900">
+                                <div><p class="font-bold text-sm text-black">PASP</p><p class="text-xs text-gray-500 mt-1">Hope and support program members</p></div>
+                            </label>
+                            <label class="border border-gray-300 rounded-xl p-4 flex items-start gap-4 cursor-pointer hover:border-blue-800 transition">
+                                <input type="checkbox" name="target_sector[]" value="KIA/WIA" class="checkbox-lg mt-1 accent-blue-900">
+                                <div><p class="font-bold text-sm text-black">KIA/WIA</p></div>
+                            </label>
+                            <label class="border border-gray-300 rounded-xl p-4 flex items-start gap-4 cursor-pointer hover:border-blue-800 transition h-auto">
+                                <input type="checkbox" name="target_sector[]" value="Other" class="checkbox-lg mt-1 accent-blue-900">
+                                <div class="w-full">
+                                    <p class="font-bold text-sm text-black">Other</p>
+                                    <div class="flex items-center gap-2 mt-1">
+                                        <span class="text-xs text-gray-500">Please specify:</span>
+                                        <input type="text" name="target_sector_other" class="border-b border-gray-400 focus:outline-none focus:border-blue-900 w-full text-sm">
+                                    </div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 class="font-bold text-lg mb-4 text-black">Special Sub-Categories</h3>
+                        <div class="space-y-4">
+                            <label class="border border-gray-300 rounded-xl p-4 flex items-start gap-4 cursor-pointer hover:border-blue-800 transition">
+                                <input type="checkbox" name="sub_category[]" value="Solo Parents" class="checkbox-lg mt-1 accent-blue-900">
+                                <div><p class="font-bold text-sm text-black">Solo Parents</p><p class="text-xs text-gray-500 mt-1">Senior citizen raising children alone</p></div>
+                            </label>
+                            <label class="border border-gray-300 rounded-xl p-4 flex items-start gap-4 cursor-pointer hover:border-blue-800 transition">
+                                <input type="checkbox" name="sub_category[]" value="Indigenous Person (IP)" class="checkbox-lg mt-1 accent-blue-900">
+                                <div><p class="font-bold text-sm text-black">Indigenous Person (IP)</p></div>
+                            </label>
+                            <label class="border border-gray-300 rounded-xl p-4 flex items-start gap-4 cursor-pointer hover:border-blue-800 transition">
+                                <input type="checkbox" name="sub_category[]" value="Recovering Person who used drugs" class="checkbox-lg mt-1 accent-blue-900">
+                                <div><p class="font-bold text-sm text-black">Recovering Person who used drugs</p></div>
+                            </label>
+                            <label class="border border-gray-300 rounded-xl p-4 flex items-start gap-4 cursor-pointer hover:border-blue-800 transition">
+                                <input type="checkbox" name="sub_category[]" value="4P's DSWD Beneficiaries" class="checkbox-lg mt-1 accent-blue-900">
+                                <div><p class="font-bold text-sm text-black">4P's DSWD Beneficiaries</p></div>
+                            </label>
+                            <label class="border border-gray-300 rounded-xl p-4 flex items-start gap-4 cursor-pointer hover:border-blue-800 transition">
+                                <input type="checkbox" name="sub_category[]" value="Street Dwellers" class="checkbox-lg mt-1 accent-blue-900">
+                                <div><p class="font-bold text-sm text-black">Street Dwellers</p></div>
+                            </label>
+                            <label class="border border-gray-300 rounded-xl p-4 flex items-start gap-4 cursor-pointer hover:border-blue-800 transition">
+                                <input type="checkbox" name="sub_category[]" value="Psychosocial/Mental/Learning Disability" class="checkbox-lg mt-1 accent-blue-900">
+                                <div><p class="font-bold text-sm text-black">Psychosocial/Mental/Learning Disability</p></div>
+                            </label>
+                            <label class="border border-gray-300 rounded-xl p-4 flex items-start gap-4 cursor-pointer hover:border-blue-800 transition">
+                                <input type="checkbox" name="sub_category[]" value="Stateless Person/Asylum" class="checkbox-lg mt-1 accent-blue-900">
+                                <div><p class="font-bold text-sm text-black">Stateless Person/Asylum</p></div>
+                            </label>
+                        </div>
                     </div>
                 </div>
             </section>
 
-            <!-- Step 4: Review & Submit -->
+            <!-- Step 4: Requirements -->
             <section id="step-4" class="step-content bg-white border border-gray-300 rounded-lg shadow-sm p-6 mb-6 hidden">
+                <h3 class="font-bold brand-blue-text text-lg mb-4">Upload Required Documents</h3>
+                <p class="text-sm text-gray-600 mb-8">Please upload clear, readable copies of the following documents (JPG, PNG, or PDF Format).<br><span class="text-xs text-gray-500">Maximum file size: 5MB per document</span></p>
+
+                <div class="space-y-6 mb-10">
+                    <div class="border border-gray-300 rounded-xl p-6">
+                        <h3 class="font-bold text-sm text-black mb-3">Proof of Age (Birth Certificate / ID): <span class="text-orange-500">*</span></h3>
+                        <div class="flex flex-col gap-2">
+                            <input type="file" name="proof_of_age" class="w-full text-sm text-gray-500" required>
+                            <p class="text-xs text-gray-500 italic mt-1">Upload birth certificate or any valid government ID showing date of birth</p>
+                        </div>
+                    </div>
+
+                    <div class="border border-gray-300 rounded-xl p-6">
+                        <h3 class="font-bold text-sm text-black mb-3">Barangay Certification / Residency: <span class="text-orange-500">*</span></h3>
+                        <div class="flex flex-col gap-2">
+                            <input type="file" name="barangay_certification" class="w-full text-sm text-gray-500" required>
+                            <p class="text-xs text-gray-500 italic mt-1">Certificate of Residency or Barangay Clearance from your barangay</p>
+                        </div>
+                    </div>
+
+                    <div class="border border-gray-300 rounded-xl p-6">
+                        <h3 class="font-bold text-sm text-black mb-3">Comelec ID / Certification (optional):</h3>
+                        <div class="flex flex-col gap-2">
+                            <input type="file" name="comelec_id" class="w-full text-sm text-gray-500">
+                            <p class="text-xs text-gray-500 italic mt-1">Voter's ID or certification (if available)</p>
+                        </div>
+                    </div>
+
+                    <div class="border border-gray-300 rounded-xl p-6">
+                        <h3 class="font-bold text-sm text-black mb-3">Senior Picture: <span class="text-orange-500">*</span></h3>
+                        <div class="flex flex-col gap-2">
+                            <input type="file" name="senior_picture" class="w-full text-sm text-gray-500" required>
+                        </div>
+                    </div>
+
+                    <div class="border border-gray-300 rounded-xl p-6">
+                        <h3 class="font-bold text-sm text-black mb-4">Thumbmark</h3>
+                        <div class="border border-gray-400 rounded px-4 py-3 flex items-center gap-3">
+                            <input type="checkbox" name="thumbmark_verified" class="checkbox-lg accent-blue-900">
+                            <span class="text-xs text-gray-500 italic">This Certify That the Person has provided a thumb mark Information and is Verified by The Personel Incharge</span>
+                        </div>
+                    </div>
+                </div>
+
                 <h3 class="font-bold brand-blue-text text-lg mb-4">Review & Confirm</h3>
                 <div id="review-content" class="text-sm text-gray-700 space-y-2">
                     <!-- Review details will be populated by JS -->
                 </div>
             </section>
+
 
             <div class="flex justify-between mt-8">
                 <button type="button" id="prev-step-btn" class="bg-gray-300 text-gray-800 px-6 py-2 rounded-md font-semibold text-sm hover:bg-gray-400 transition hidden">Previous</button>
@@ -197,8 +329,6 @@
 
         const genderSelect = document.getElementById('gender_id');
         const educationalAttainmentSelect = document.getElementById('educational_attainment_id');
-        const socioeconomicStatusSelect = document.getElementById('socioeconomic_status_id');
-        const mobilityLevelSelect = document.getElementById('mobility_level_id');
         const barangaySelect = document.getElementById('barangay_id');
 
         document.addEventListener('DOMContentLoaded', async function() {
@@ -208,8 +338,6 @@
             await Promise.all([
                 fetchAndPopulateDropdown('../api/genders/list.php', genderSelect, 'Select Gender'),
                 fetchAndPopulateDropdown('../api/educational_attainment/list.php', educationalAttainmentSelect, 'Select Educational Attainment'),
-                fetchAndPopulateDropdown('../api/socioeconomic_statuses/list.php', socioeconomicStatusSelect, 'Select Socioeconomic Status'),
-                fetchAndPopulateDropdown('../api/mobility_levels/list.php', mobilityLevelSelect, 'Select Mobility Level'),
                 fetchAndPopulateDropdown('../api/barangays/list.php', barangaySelect, 'Select Barangay')
             ]).catch(error => {
                 showMessage('error', 'Fetch Error', "Failed to load form data. Please try again.");
@@ -233,16 +361,21 @@
         });
 
         async function fetchAndPopulateDropdown(apiEndpoint, selectElement, defaultOptionText) {
-            const response = await fetch(apiEndpoint);
-            const data = await response.json();
-            if (data.success) {
-                selectElement.innerHTML = `<option value="">${defaultOptionText}</option>`;
-                data.data.forEach(item => {
-                    selectElement.innerHTML += `<option value="${item.id}">${item.name || item.level || item.category}</option>`;
-                });
-            } else {
-                showMessage('error', 'Fetch Error', `Error fetching data from ${apiEndpoint}: ${data.message}`);
-                console.error(`Error fetching data from ${apiEndpoint}:`, data.message);
+            try {
+                const response = await fetch(apiEndpoint);
+                const data = await response.json();
+                if (data.success) {
+                    selectElement.innerHTML = `<option value="">${defaultOptionText}</option>`;
+                    data.data.forEach(item => {
+                        selectElement.innerHTML += `<option value="${item.id}">${item.name || item.level || item.category}</option>`;
+                    });
+                } else {
+                    showMessage('error', 'Fetch Error', `Error fetching data from ${apiEndpoint}: ${data.message}`);
+                    console.error(`Error fetching data from ${apiEndpoint}:`, data.message);
+                }
+            } catch (error) {
+                showMessage('error', 'Fetch Error', 'An unexpected error occurred while fetching dropdown data.');
+                console.error('Error:', error);
             }
         }
 
@@ -258,6 +391,7 @@
                     document.getElementById('last_name').value = senior.last_name;
                     document.getElementById('extension').value = senior.extension;
                     document.getElementById('birthdate').value = senior.birthdate;
+                    document.getElementById('age').value = senior.age;
                     document.getElementById('gender_id').value = senior.gender_id;
 
                     // Contact info
@@ -265,7 +399,6 @@
                         contactIdInput.value = senior.contact_id;
                         document.getElementById('mobile_number').value = senior.mobile_number;
                         document.getElementById('telephone_number').value = senior.telephone_number;
-                        document.getElementById('email').value = senior.email;
                         document.getElementById('house_number').value = senior.house_number;
                         document.getElementById('street').value = senior.street;
                     }
@@ -276,8 +409,6 @@
                     document.getElementById('monthly_salary').value = senior.monthly_salary;
                     document.getElementById('occupation').value = senior.occupation;
                     document.getElementById('other_skills').value = senior.other_skills;
-                    document.getElementById('socioeconomic_status_id').value = senior.socioeconomic_status_id;
-                    document.getElementById('mobility_level_id').value = senior.mobility_level_id;
 
                 } else {
                     showMessage('error', 'Fetch Error', data.message);
@@ -295,12 +426,13 @@
                 section.classList.toggle('hidden', index + 1 !== stepNum);
             });
             document.querySelectorAll('#stepper-header > div').forEach((tab, index) => {
-                tab.classList.remove('step-active', 'step-inactive');
-                tab.classList.add(index + 1 <= stepNum ? 'step-active' : 'step-inactive');
+                tab.classList.remove('step-active', 'step-inactive', 'step-completed');
                 if (index + 1 < stepNum) {
-                    tab.classList.add('step-completed'); // Optional: Add a class for completed steps
+                    tab.classList.add('step-completed');
+                } else if (index + 1 === stepNum) {
+                    tab.classList.add('step-active');
                 } else {
-                    tab.classList.remove('step-completed');
+                    tab.classList.add('step-inactive');
                 }
             });
 
@@ -324,7 +456,7 @@
             inputs.forEach(input => {
                 if (!input.value.trim()) {
                     isValid = false;
-                    input.classList.add('border-red-500'); // Highlight empty required fields
+                    input.classList.add('border-red-500');
                 } else {
                     input.classList.remove('border-red-500');
                 }
@@ -333,15 +465,13 @@
         }
 
         function goToStep(stepNum) {
-            if (stepNum < currentStep && validateStep(currentStep)) {
+            if (stepNum < currentStep || validateStep(currentStep)) {
                 currentStep = stepNum;
                 showStep(currentStep);
-            } else if (stepNum > currentStep && validateStep(currentStep)) {
-                currentStep = stepNum;
-                showStep(currentStep);
+            } else {
+                 showMessage('error', 'Validation Error', "Please fill in all required fields.");
             }
         }
-
 
         document.getElementById('next-step-btn').addEventListener('click', function() {
             if (validateStep(currentStep)) {
@@ -363,64 +493,75 @@
         function populateReviewContent() {
             const reviewContent = document.getElementById('review-content');
             const formData = new FormData(form);
-            let html = '<h3>Personal Details</h3><ul>';
+            let html = '<h3>Personal Information</h3><ul>';
             
             html += `<li><strong>First Name:</strong> ${formData.get('first_name')}</li>`;
             html += `<li><strong>Middle Name:</strong> ${formData.get('middle_name') || 'N/A'}</li>`;
             html += `<li><strong>Last Name:</strong> ${formData.get('last_name')}</li>`;
             html += `<li><strong>Extension:</strong> ${formData.get('extension') || 'N/A'}</li>`;
             html += `<li><strong>Birthdate:</strong> ${formData.get('birthdate')}</li>`;
+            html += `<li><strong>Age:</strong> ${formData.get('age')}</li>`;
             html += `<li><strong>Gender:</strong> ${genderSelect.options[genderSelect.selectedIndex].text}</li>`;
-            html += '</ul><h3>Contact Information</h3><ul>';
+            html += '</ul><h3>Contact & Background Information</h3><ul>';
             html += `<li><strong>Mobile Number:</strong> ${formData.get('contact[mobile_number]') || 'N/A'}</li>`;
             html += `<li><strong>Telephone Number:</strong> ${formData.get('contact[telephone_number]') || 'N/A'}</li>`;
-            html += `<li><strong>Email:</strong> ${formData.get('contact[email]') || 'N/A'}</li>`;
-            html += `<li><strong>House Number:</strong> ${formData.get('contact[house_number]') || 'N/A'}</li>`;
+            html += `<li><strong>House No.:</strong> ${formData.get('contact[house_number]') || 'N/A'}</li>`;
             html += `<li><strong>Street:</strong> ${formData.get('contact[street]') || 'N/A'}</li>`;
             html += `<li><strong>Barangay:</strong> ${barangaySelect.options[barangaySelect.selectedIndex].text}</li>`;
-            html += '</ul><h3>Socioeconomic Details</h3><ul>';
             html += `<li><strong>Educational Attainment:</strong> ${educationalAttainmentSelect.options[educationalAttainmentSelect.selectedIndex].text || 'N/A'}</li>`;
             html += `<li><strong>Monthly Salary:</strong> ${formData.get('monthly_salary') || 'N/A'}</li>`;
             html += `<li><strong>Occupation:</strong> ${formData.get('occupation') || 'N/A'}</li>`;
             html += `<li><strong>Other Skills:</strong> ${formData.get('other_skills') || 'N/A'}</li>`;
-            html += `<li><strong>Socioeconomic Status:</strong> ${socioeconomicStatusSelect.options[socioeconomicStatusSelect.selectedIndex].text || 'N/A'}</li>`;
-            html += `<li><strong>Mobility Level:</strong> ${mobilityLevelSelect.options[mobilityLevelSelect.selectedIndex].text || 'N/A'}</li>`;
             html += '</ul>';
+
+            // Family Composition
+            html += '<h3>Family Composition</h3>';
+            const familyMembers = document.querySelectorAll('#family-container .member-card');
+            if (familyMembers.length > 0) {
+                html += '<ul>';
+                familyMembers.forEach((member, index) => {
+                    html += `<li><strong>Member ${index + 1}:</strong> `;
+                    html += `Name: ${member.querySelector('[name="family_first_name[]"]').value} ${member.querySelector('[name="family_middle_name[]"]').value} ${member.querySelector('[name="family_last_name[]"]').value}, `;
+                    html += `Relationship: ${member.querySelector('[name="family_relationship[]"]').value}, `;
+                    html += `Age: ${member.querySelector('[name="family_age[]"]').value}, `;
+                    html += `Salary: ${member.querySelector('[name="family_salary[]"]').value}`;
+                    html += `</li>`;
+                });
+                html += '</ul>';
+            } else {
+                html += '<p>No family members added.</p>';
+            }
+
+            // Association
+            html += '<h3>Association</h3>';
+            const targetSectors = formData.getAll('target_sector[]');
+            const subCategories = formData.getAll('sub_category[]');
+            html += `<p><strong>Target Sectors:</strong> ${targetSectors.join(', ') || 'N/A'}</p>`;
+            if (targetSectors.includes('Other')) {
+                 html += `<p><strong>Other Target Sector:</strong> ${formData.get('target_sector_other')}</p>`;
+            }
+            html += `<p><strong>Sub-Categories:</strong> ${subCategories.join(', ') || 'N/A'}</p>`;
+            
             reviewContent.innerHTML = html;
         }
-
 
         form.addEventListener('submit', async function(e) {
             e.preventDefault();
             formErrorMessage.textContent = "";
 
             if (!validateStep(totalSteps)) {
-                showMessage('error', 'Validation Error', "Please fill in all required fields in the review step.");
+                showMessage('error', 'Validation Error', "Please fill in all required fields.");
                 return;
             }
 
-            loadingOverlay.classList.remove('hidden'); // Show spinner
+            loadingOverlay.classList.remove('hidden');
 
             const formData = new FormData(form);
-            const data = {};
-            for (let [key, value] of formData.entries()) {
-                // Handle nested contact object
-                if (key.startsWith('contact[')) {
-                    const contactKey = key.match(/contact\[(.*?)\]/)[1];
-                    if (!data.contact) {
-                        data.contact = {};
-                    }
-                    data.contact[contactKey] = value;
-                } else {
-                    data[key] = value;
-                }
-            }
 
             try {
                 const response = await fetch('../api/seniors/save.php', {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(data)
+                    body: formData
                 });
                 const result = await response.json();
                 if (result.success) {
@@ -432,9 +573,73 @@
                 showMessage('error', 'Save Error', 'An unexpected error occurred.');
                 console.error('Error:', error);
             } finally {
-                loadingOverlay.classList.add('hidden'); // Hide spinner
+                loadingOverlay.classList.add('hidden');
             }
         });
+
+        // --- Family Logic ---
+        const familyContainer = document.getElementById('family-container');
+
+        function createMemberHTML(index) {
+            return `
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 md:p-8 member-card relative fade-in">
+                <div class="flex items-center gap-4 mb-6">
+                    <div class="h-6 w-6 relative">
+                        <input type="checkbox" class="member-checkbox w-6 h-6 border-2 border-gray-300 rounded cursor-pointer accent-blue-900">
+                    </div>
+                    <h3 class="text-xl font-medium text-black member-title">Family Member ${index}</h3>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-5">
+                    <div><label class="block text-sm font-bold mb-2 text-black">First Name <span class="text-orange-500">*</span></label><input type="text" name="family_first_name[]" class="w-full border border-gray-300 rounded-lg p-3 text-gray-700 h-12" required></div>
+                    <div><label class="block text-sm font-bold mb-2 text-black">Middle Name/Middle Initial <span class="text-orange-500">*</span></label><input type="text" name="family_middle_name[]" class="w-full border border-gray-300 rounded-lg p-3 text-gray-700 h-12" required></div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-5">
+                    <div class="md:col-span-2"><label class="block text-sm font-bold mb-2 text-black">Last Name <span class="text-orange-500">*</span></label><input type="text" name="family_last_name[]" class="w-full border border-gray-300 rounded-lg p-3 text-gray-700 h-12" required></div>
+                    <div><label class="block text-sm font-bold mb-2 text-black">Extension</label><input type="text" name="family_extension[]" class="w-full border border-gray-300 rounded-lg p-3 text-gray-700 h-12"></div>
+                </div>
+                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div><label class="block text-sm font-bold mb-2 text-black">Relationship <span class="text-orange-500">*</span></label><input type="text" name="family_relationship[]" class="w-full border border-gray-300 rounded-lg p-3 text-gray-700 h-12" required></div>
+                    <div><label class="block text-sm font-bold mb-2 text-black">Age <span class="text-orange-500">*</span></label><input type="number" name="family_age[]" class="w-full border border-gray-300 rounded-lg p-3 text-gray-700 h-12" required></div>
+                    <div><label class="block text-sm font-bold mb-2 text-black">Monthly Salary <span class="text-orange-500">*</span></label><input type="text" name="family_salary[]" class="w-full border border-gray-300 rounded-lg p-3 text-gray-700 h-12" required></div>
+                </div>
+            </div>`;
+        }
+
+        function addFamilyMember() {
+            const currentCount = familyContainer.children.length + 1;
+            const newMemberDiv = document.createElement('div');
+            newMemberDiv.innerHTML = createMemberHTML(currentCount);
+            familyContainer.appendChild(newMemberDiv.firstElementChild);
+        }
+
+        function deleteSelected() {
+            const checkboxes = document.querySelectorAll('.member-checkbox:checked');
+            if (checkboxes.length === 0) { 
+                showMessage('info', 'No Selection', "Please check the box next to the family member you wish to delete."); 
+                return; 
+            }
+            if (confirm(`Are you sure you want to remove ${checkboxes.length} family member(s)?`)) {
+                checkboxes.forEach(checkbox => { 
+                    const card = checkbox.closest('.member-card'); 
+                    if (card) card.remove(); 
+                });
+                renumberMembers();
+            }
+        }
+
+        function renumberMembers() {
+            const titles = document.querySelectorAll('.member-title');
+            titles.forEach((title, index) => { title.textContent = `Family Member ${index + 1}`; });
+        }
+
+        // Dummy showMessage function if not already present
+        function showMessage(type, title, message, redirectUrl = null) {
+            // In a real app, you'd use a modal library like SweetAlert2
+            alert(`${title}: ${message}`);
+            if (redirectUrl) {
+                window.location.href = redirectUrl;
+            }
+        }
     </script>
 </body>
 </html>

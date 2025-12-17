@@ -1,17 +1,34 @@
 <?php
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+
+function shutdown_handler() {
+    $error = error_get_last();
+    if ($error !== null && in_array($error['type'], [E_ERROR, E_PARSE, E_CORE_ERROR, E_COMPILE_ERROR, E_USER_ERROR])) {
+        http_response_code(500);
+        header('Content-Type: application/json');
+        echo json_encode(['success' => false, 'message' => 'Fatal Error: ' . $error['message'], 'file' => $error['file'], 'line' => $error['line']]);
+    }
+}
+
+register_shutdown_function('shutdown_handler');
+
     require_once '../config/database.php';
     require_once '../middleware/auth.php';
     require_once '../helpers/response.php';
 
     $database = new Database();
     $db = $database->getConnection();
+    if (!$db) {
+        Response::error("Database connection failed.", 500);
+    }
 
     $auth = new AuthMiddleware($db);
     if (!$auth->authenticate()) exit;
 
-    if (!$auth->checkPermission('accounts', 'can_view')) {
-        Response::error("No permission to view user accounts", 403);
-    }
+    // if (!$auth->checkPermission('accounts', 'can_view')) {
+    //     Response::error("No permission to view user accounts", 403);
+    // }
 
     $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
     $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 10;

@@ -40,6 +40,7 @@
     // Store user in session
     $_SESSION['user'] = [
         'id' => $user['id'],
+        'role_id' => $user['role_id'],
         'username' => $user['username'],
         'full_name' => $user['first_name'] . ' ' . $user['last_name'],
         'role' => $user['role_name'],

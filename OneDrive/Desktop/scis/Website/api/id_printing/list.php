@@ -52,7 +52,10 @@
                     LEFT JOIN application_types atype ON a.application_type_id = atype.id
                     " . $where;
     $stmt = $db->prepare($count_query);
-    $stmt->execute($params);
+    foreach ($params as $key => &$val) {
+        $stmt->bindParam($key, $val);
+    }
+    $stmt->execute();
     $total = $stmt->fetch(PDO::FETCH_ASSOC)['total'];
 
     // Data query
@@ -67,11 +70,11 @@
             LIMIT :limit OFFSET :offset";
 
     $stmt = $db->prepare($query);
-    $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
-    $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
     foreach ($params as $key => &$val) {
         $stmt->bindParam($key, $val);
     }
+    $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
+    $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
     $stmt->execute();
 
     $applications = $stmt->fetchAll(PDO::FETCH_ASSOC);

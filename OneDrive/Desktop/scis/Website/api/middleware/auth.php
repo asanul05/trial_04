@@ -5,7 +5,7 @@
     class AuthMiddleware {
         private $db;
         private $user_id;
-        private $role_id;
+        private int $role_id;
         private $branch_id;
         private $barangay_id;
         
@@ -19,6 +19,10 @@
             }
             
             $user_session = $_SESSION['user'];
+
+            if (!isset($user_session['id']) || !isset($user_session['role_id'])) {
+                return $this->unauthorized("Unauthorized access: User session is incomplete.");
+            }
 
             $this->user_id = $user_session['id'];
             $this->role_id = $user_session['role_id'];
@@ -50,6 +54,7 @@
                 return $row && $row['has_permission'];
             } catch (PDOException $e) {
                 Response::error("Permission check failed: " . $e->getMessage(), 500);
+                exit();
             }
         }
         
@@ -78,6 +83,7 @@
                     return $row['count'] > 0;
                 } catch (PDOException $e) {
                     Response::error("Barangay access check failed: " . $e->getMessage(), 500);
+                    exit();
                 }
             }
             
@@ -115,6 +121,7 @@
                 return $barangays;
             } catch (PDOException $e) {
                 Response::error("Failed to get accessible barangays: " . $e->getMessage(), 500);
+                exit();
             }
         }
         
@@ -139,8 +146,9 @@
                 
                 $stmt->execute();
             } catch (PDOException $e) {
-                // Log the error but don't stop execution for non-critical logging failure
-                error_log("Failed to log API access: " . $e->getMessage());
+                // Log the error and return a JSON response
+                Response::error("Failed to log API access: " . $e->getMessage(), 500);
+                exit();
             }
         }
         
@@ -159,8 +167,7 @@
         }
         
         private function unauthorized($message) {
-            http_response_code(401);
-            echo json_encode(['success' => false, 'message' => $message]);
+            Response::error($message, 401);
             exit();
         }
         

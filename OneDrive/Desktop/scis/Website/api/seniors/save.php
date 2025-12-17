@@ -47,6 +47,18 @@
                 Response::error("Field $field is required", 400);
             }
         }
+        // Check for duplicates
+        $query = "SELECT id FROM senior_citizens WHERE first_name = :first_name AND last_name = :last_name AND birthdate = :birthdate";
+        $stmt = $db->prepare($query);
+        $stmt->bindParam(':first_name', $data->first_name);
+        $stmt->bindParam(':last_name', $data->last_name);
+        $stmt->bindParam(':birthdate', $data->birthdate);
+        $stmt->execute();
+        if ($stmt->fetch(PDO::FETCH_ASSOC)) {
+            Response::error("A senior citizen with the same name and birthdate already exists.", 409);
+            exit;
+        }
+
         // Check barangay access for create
         if (!$auth->canAccessBarangay($data->barangay_id)) {
             Response::error("No access to create seniors in this barangay", 403);

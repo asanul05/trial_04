@@ -100,7 +100,7 @@
                 END,
                 a.submission_date DESC,
                 a.created_at DESC
-            LIMIT :limit_val OFFSET :offset_val";
+            LIMIT ? OFFSET ?";
 
     $stmt = $db->prepare($query);
     
@@ -111,9 +111,9 @@
         $stmt->bindValue($param_index++, $value, $type);
     }
     
-    // Bind LIMIT and OFFSET explicitly as integers using named parameters
-    $stmt->bindParam(':limit_val', $limit, PDO::PARAM_INT);
-    $stmt->bindParam(':offset_val', $offset, PDO::PARAM_INT);
+    // Bind LIMIT and OFFSET explicitly as integers
+    $stmt->bindValue($param_index++, $limit, PDO::PARAM_INT);
+    $stmt->bindValue($param_index++, $offset, PDO::PARAM_INT);
     
     $stmt->execute();
     $applications = $stmt->fetchAll(PDO::FETCH_ASSOC);

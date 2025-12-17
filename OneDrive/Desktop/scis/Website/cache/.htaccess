@@ -1,0 +1,11 @@
+# Place this file in: Website/cache/.htaccess
+# Denies all web access to cache files
+
+# Deny access to all files in this directory
+<Files *>
+    Order Allow,Deny
+    Deny from all
+</Files>
+
+# Prevent directory listing
+Options -Indexes

@@ -33,6 +33,18 @@
         <div class="spinner"></div>
     </div>
 
+    <div id="idModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white p-6 rounded-lg shadow-xl w-full max-w-sm">
+            <h3 class="text-lg font-bold text-gray-900 mb-4">Enter Senior ID</h3>
+            <p class="text-sm text-gray-600 mb-4">Please enter the Senior ID for the action you wish to perform.</p>
+            <input type="text" id="seniorIdInput" class="w-full border border-gray-300 rounded-md px-3 py-2 mb-4 focus:ring-brandBlue focus:border-brandBlue text-sm" placeholder="Senior ID">
+            <div class="flex justify-end space-x-3">
+                <button id="cancelIdModal" class="bg-gray-300 text-gray-800 px-4 py-2 rounded-md text-sm font-semibold hover:bg-gray-400 transition">Cancel</button>
+                <button id="goIdModal" class="bg-dashboardBlue text-white px-4 py-2 rounded-md text-sm font-semibold hover:bg-indigo-900 transition">Go</button>
+            </div>
+        </div>
+    </div>
+
     <?php 
     // Sets the active page for the sidebar
     $current_page = basename($_SERVER['PHP_SELF']); 
@@ -57,10 +69,10 @@
                     <a href="new_id.php" class="bg-dashboardBlue text-white py-3 px-4 rounded-md font-bold hover:bg-indigo-900 transition shadow-md flex items-center justify-center gap-2">
                         <i class="fa-solid fa-plus"></i> New ID
                     </a>
-                    <a href="revalidation_update.php" class="bg-dashboardBlue text-white py-3 px-4 rounded-md font-bold hover:bg-indigo-900 transition shadow-md flex items-center justify-center gap-2">
+                    <a href="javascript:void(0)" onclick="openIdModal('revalidation_update.php')" class="bg-dashboardBlue text-white py-3 px-4 rounded-md font-bold hover:bg-indigo-900 transition shadow-md flex items-center justify-center gap-2">
                         Revalidation/Update
                     </a>
-                    <a href="lost_damaged.php" class="bg-dashboardBlue text-white py-3 px-4 rounded-md font-bold hover:bg-indigo-900 transition shadow-md flex items-center justify-center gap-2">
+                    <a href="javascript:void(0)" onclick="openIdModal('lost_damaged.php')" class="bg-dashboardBlue text-white py-3 px-4 rounded-md font-bold hover:bg-indigo-900 transition shadow-md flex items-center justify-center gap-2">
                         Lost/Damage ID
                     </a>
                     <button class="bg-dashboardBlue text-white py-3 px-4 rounded-md font-bold hover:bg-indigo-900 transition shadow-md">
@@ -132,9 +144,45 @@
     </div>
 
     <script>
+        // Global variable to store the target URL for the modal
+        let currentModalActionUrl = '';
+
         document.addEventListener('DOMContentLoaded', function() {
             fetchSeniors();
+
+            const idModal = document.getElementById('idModal');
+            const seniorIdInput = document.getElementById('seniorIdInput');
+            const cancelIdModal = document.getElementById('cancelIdModal');
+            const goIdModal = document.getElementById('goIdModal');
+
+            cancelIdModal.addEventListener('click', closeIdModal);
+            goIdModal.addEventListener('click', goToPageWithId);
+            seniorIdInput.addEventListener('keypress', function(event) {
+                if (event.key === 'Enter') {
+                    goToPageWithId();
+                }
+            });
         });
+
+        function openIdModal(actionUrl) {
+            currentModalActionUrl = actionUrl;
+            document.getElementById('seniorIdInput').value = ''; // Clear previous input
+            document.getElementById('idModal').classList.remove('hidden');
+            document.getElementById('seniorIdInput').focus();
+        }
+
+        function closeIdModal() {
+            document.getElementById('idModal').classList.add('hidden');
+        }
+
+        function goToPageWithId() {
+            const seniorId = document.getElementById('seniorIdInput').value.trim();
+            if (seniorId) {
+                window.location.href = `${currentModalActionUrl}?id=${seniorId}`;
+            } else {
+                showMessage('error', 'Input Error', 'Please enter a Senior ID.');
+            }
+        }
 
         function fetchSeniors() {
             const loadingOverlay = document.getElementById('loading-overlay');
@@ -156,6 +204,8 @@
                                     <td class="py-4">${senior.is_active == 1 && senior.is_deceased == 0 ? '<span class="bg-green-100 text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full">Active</span>' : (senior.is_deceased == 1 ? '<span class="bg-gray-100 text-gray-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full">Deceased</span>' : '<span class="bg-red-100 text-red-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full">Inactive</span>')}</td>
                                     <td class="py-4 text-center">
                                         <button class="px-4 py-1.5 border border-gray-300 text-gray-700 rounded hover:bg-gray-100 transition text-xs font-semibold" onclick="editSenior(${senior.id})">Edit</button>
+                                        <button class="px-4 py-1.5 border border-green-500 text-green-500 rounded hover:bg-green-50 transition text-xs font-semibold" onclick="revalidateSenior(${senior.id})">Revalidate</button>
+                                        <button class="px-4 py-1.5 border border-yellow-500 text-yellow-500 rounded hover:bg-yellow-50 transition text-xs font-semibold" onclick="lostDamagedSenior(${senior.id})">Lost/Damaged</button>
                                         <button class="px-4 py-1.5 border border-red-500 text-red-500 rounded hover:bg-red-50 transition text-xs font-semibold" onclick="deleteSenior(${senior.id})">Delete</button>
                                     </td>
                                 </tr>
@@ -173,9 +223,15 @@
         }
 
         function editSenior(id) {
-            // Redirect to an edit page, or open a modal
-            // Assuming there's a page like add_senior.php for adding/editing seniors
-            window.location.href = `add_senior.php?id=${id}`;
+            window.location.href = `new_id.php?id=${id}`;
+        }
+
+        function revalidateSenior(id) {
+            window.location.href = `revalidation_update.php?id=${id}`;
+        }
+
+        function lostDamagedSenior(id) {
+            window.location.href = `lost_damaged.php?id=${id}`;
         }
 
         function deleteSenior(id) {
@@ -204,6 +260,13 @@
             .finally(() => {
                 loadingOverlay.classList.add('hidden'); // Hide spinner
             });
+        }
+
+        function showMessage(type, title, message, redirectUrl = null) {
+            alert(`${title}: ${message}`);
+            if (redirectUrl) {
+                window.location.href = redirectUrl;
+            }
         }
     </script>
 </body>

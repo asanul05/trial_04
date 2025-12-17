@@ -23,7 +23,7 @@
     $age_group = isset($_GET['age_group']) ? $_GET['age_group'] : null;
 
     $where_clauses = ["1=1"];
-    $params = [];
+    $params_to_bind = [];
 
     $accessible_barangays = $auth->getAccessibleBarangays();
     
@@ -31,57 +31,67 @@
     if ($auth->getRoleId() == 1) { // Main Admin sees all
         // No barangay filtering needed
     } elseif (!empty($accessible_barangays)) { // Filter by accessible barangays for other roles
-        $barangay_ids_str = implode(',', array_map('intval', $accessible_barangays));
-        $where_clauses[] = "s.barangay_id IN ($barangay_ids_str)";
+        $placeholders = implode(',', array_fill(0, count($accessible_barangays), '?'));
+        $where_clauses[] = "s.barangay_id IN ($placeholders)";
+        $params_to_bind = array_merge($params_to_bind, $accessible_barangays);
     } else { // No accessible barangays for this role, so no results
         Response::paginated([], $page, $limit, 0, "No senior citizens accessible");
     }
 
     if ($search) {
-        $where .= " AND (s.first_name LIKE :search 
-                    OR s.last_name LIKE :search 
-                    OR s.osca_id LIKE :search)";
+        $where_clauses[] = "(s.first_name LIKE :search 
+                            OR s.last_name LIKE :search 
+                            OR s.osca_id LIKE :search)";
+        $params_to_bind[':search'] = '%' . $search . '%';
     }
 
     if ($barangay) {
         if (!$auth->canAccessBarangay($barangay)) {
             Response::error("No access to this barangay", 403);
         }
-        $where .= " AND s.barangay_id = :barangay";
+        $where_clauses[] = "s.barangay_id = :barangay";
+        $params_to_bind[':barangay'] = $barangay;
     }
 
     if ($status) {
-        $where .= " AND rs.name = :status";
+        $where_clauses[] = "rs.name = :status";
+        $params_to_bind[':status'] = $status;
     }
 
     if ($age_group) {
         switch($age_group) {
             case 'septuagenarian':
-                $where .= " AND s.age BETWEEN 70 AND 79";
+                $where_clauses[] = "s.age BETWEEN 70 AND 79";
                 break;
             case 'octogenarian':
-                $where .= " AND s.age BETWEEN 80 AND 89";
+                $where_clauses[] = "s.age BETWEEN 80 AND 89";
                 break;
             case 'nonagenarian':
-                $where .= " AND s.age BETWEEN 90 AND 99";
+                $where_clauses[] = "s.age BETWEEN 90 AND 99";
                 break;
             case 'centenarian':
-                $where .= " AND s.age >= 100";
+                $where_clauses[] = "s.age >= 100";
                 break;
         }
     }
+
+    $where = "WHERE " . implode(" AND ", $where_clauses);
+
+    $where = "WHERE " . implode(" AND ", $where_clauses);
 
     // Count query
     $count_query = "SELECT COUNT(*) as total FROM senior_citizens s
                     JOIN registration_statuses rs ON s.registration_status_id = rs.id
                     $where";
     $stmt = $db->prepare($count_query);
-    if ($search) {
-        $search_param = "%$search%";
-        $stmt->bindParam(':search', $search_param);
+    $param_index = 1;
+    foreach ($params_to_bind as $key => $value) {
+        if (is_int($key)) { // Positional parameter (e.g., from barangay_id IN (...))
+            $stmt->bindValue($param_index++, $value, PDO::PARAM_INT);
+        } else { // Named parameter (e.g., :search, :barangay, :status)
+            $stmt->bindValue($key, $value);
+        }
     }
-    if ($barangay) $stmt->bindParam(':barangay', $barangay);
-    if ($status) $stmt->bindParam(':status', $status);
     $stmt->execute();
     $total = $stmt->fetch(PDO::FETCH_ASSOC)['total'];
 
@@ -101,12 +111,14 @@
             LIMIT :limit OFFSET :offset";
 
     $stmt = $db->prepare($query);
-    if ($search) {
-        $search_param = "%$search%";
-        $stmt->bindParam(':search', $search_param);
+    $param_index = 1;
+    foreach ($params_to_bind as $key => $value) {
+        if (is_int($key)) { // Positional parameter (e.g., from barangay_id IN (...))
+            $stmt->bindValue($param_index++, $value, PDO::PARAM_INT);
+        } else { // Named parameter (e.g., :search, :barangay, :status)
+            $stmt->bindValue($key, $value);
+        }
     }
-    if ($barangay) $stmt->bindParam(':barangay', $barangay);
-    if ($status) $stmt->bindParam(':status', $status);
     $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
     $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
     $stmt->execute();
